@@ -1,0 +1,186 @@
+{% extends "@EasyAdmin/page/content.html.twig" %}
+
+{% block content_title %}
+        <h1 class="title">Dashboard</h1>
+{% endblock %}
+
+{% block content_footer_wrapper 'Open IPMI' %}
+
+{% block body_javascript %}
+
+<script>
+$(document).ready(function(){
+
+    $('.location').on("click", function(){
+
+        $(".racks").html('');
+        var jqxhr = $.ajax( "/api/rack/location/"+$(this).attr("id"), function() {
+        })
+          .done(function(racks) {
+              addRacks(racks);
+              
+          })
+          .fail(function() {
+            //alert( "No racks found" );
+            $(".racks").html('No racks found');
+          })
+
+    });
+
+    function appendDevices(rack) {
+
+        var jqxhr = $.ajax( "/api/device/rack/"+rack, function() {
+        })
+          .done(function(devices) {
+              
+            $("#rack"+rack).html('');
+            devices.forEach(getDevice);
+            function getDevice(device) {
+
+              //alert( "#rack"+rack);
+              var html = $("<tr>")
+              .append(
+                  $("<td>")
+                  .append(
+                      $("<a href=''>").text(device["positionStart"]+"-"+device["positionEnd"])
+                  )
+              )
+              .append(
+                  $("<td>")
+                  .append(
+                      $("<a href='{{ path('dashboard') }}'>").text(device["name"])
+                  )
+              )
+              
+              .append(
+                  $("<td>")
+                  .append(
+                      $("<a href=''>")
+                      .append(
+                          $("<span class='fa fa-power-off'>")
+                      )
+                  )
+              )
+              .append(
+                  $("<td>")
+                  .append(
+                      $("<a href='http://"+device["ipv4"]+"'>")
+                      .append(
+                          $("<span class='fa fa-link'>")
+                      )
+                  )
+              )
+              .append(
+                  $("<td>")
+                  .append(
+                      $("<a href=''>")
+                      .append(
+                          $("<span class='fa fa-book'>")
+                      )
+                  )
+              );
+
+
+
+              $("#rack"+rack).after(html);
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+              
+          })
+          .fail(function() {
+            $("#rack"+rack).html('');
+            $("#rack"+rack).append($('<p>').text('No devices found.'));
+            //alert( "No devices" );
+          })
+    }
+
+    function addRacks(racks) {
+      racks.forEach(getRack);
+
+      function getRack(rack) {
+
+        var html = $("<div class='col rack'>")
+              .append($("<table class='table table-sm table-hover border rounded-3 ' style='width:300px; float: left;'></table>")
+          .append(
+              $("<tbody>")
+              .append(
+                  $("<tr>")
+                  .append(
+                      $("<th>")
+                      .append(
+                          $("<h5>")
+                          .append(
+                            $("<a href=''>").text('Rack '+rack["tag"])
+                          )
+                      )
+                  )
+              )
+              .append(
+                  $("<tr id='rack"+rack["id"]+"'>")
+                  .append(
+                      $("<td class='loader'>")
+                      .append(
+                        $("<p>").text('Loading devices ...')
+                      )
+                      
+                  )
+              )
+
+          ));
+
+        if(!$.trim( $('.racks').html()).length) {
+          $(".racks").html(html);
+        }else{
+          $(".rack").after(html);
+        }
+
+        appendDevices(rack["id"]);
+      }
+    } 
+
+});
+</script>
+{% endblock %}
+
+{% block main %}
+    
+
+    <div class="container-fluid pt-3">
+       
+      <div class="row">
+
+      {% for location in locations %}
+        <div class="col location" id="{{ location.id }}">
+          <div class="card" style="cursor: pointer;">
+            <div class="card-header">
+              <a href="">{{ location.name }}</a>
+            </div>
+            <div class="card-body">
+              <p class="card-text"><span data-feather="columns"></span> Racks: {{ location.getRackCount }}</p>
+              <p class="card-text"><span data-feather="server"></span> Devices: {{ location.getDeviceCount }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+       
+      </div>
+
+
+<div  class="row row-cols-12 pt-3 racks">
+
+</div>
+
+{% endblock %}
+
