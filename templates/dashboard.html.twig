@@ -14,6 +14,12 @@ $(document).ready(function() {
 
   $('.location').on("click", function() {
 
+    $('.location').find('.card-header').removeClass( "bg-primary" );
+    $('.card-header').find('a').removeClass( "text-light" );
+
+    $(this).find('.card-header').addClass( "bg-primary" );
+    $(this).find('.card-header a').addClass( "text-light" );
+
     $(".racks").html('');
     var jqxhr = $.ajax("/api/rack/location/" + $(this).attr("id"), function() {})
       .done(function(racks) {
@@ -32,6 +38,7 @@ $(document).ready(function() {
     var jqxhr = $.ajax("/api/device/rack/" + rack, function() {})
       .done(function(devices) {
 
+
         $("#rack" + rack).html('');
         devices.forEach(getDevice);
 
@@ -40,7 +47,7 @@ $(document).ready(function() {
           //alert( "#rack"+rack);
           var html = $("<tr class='device'>")
             .append(
-              $("<td>").text(device["positionStart"] + "-" + device["positionEnd"])
+              $("<td class='px-3'>").text(device["positionStart"] + "-" + device["positionEnd"])
 
             )
             .append(
@@ -89,7 +96,7 @@ $(document).ready(function() {
       })
       .fail(function() {
         $("#rack" + rack).html('');
-        $("#rack" + rack).append($('<p>').text('No devices found.'));
+        $("#rack" + rack).append($("<p class='p-3'>").text('No devices found.'));
         //alert( "No devices" );
       })
   }
@@ -109,17 +116,25 @@ $(document).ready(function() {
             .append(
               $("<tr>")
               .append(
-                $("<th>")
+                $("<th class='p-3 bg-light'>")
                 .append(
-                  $("<h5>")
+                  $("<h6>")
                   .append(
                     $("<a href='" + rack["url_show"] + "'>").text('Rack ' + rack["tag"])
                   )
                 )
               )
+              .append(
+                $("<th class='p-3 bg-light'>"))
+              .append(
+                $("<th class='p-3 bg-light'>"))
+              .append(
+                $("<th class='p-3 bg-light'>"))
+              .append(
+                $("<th class='p-3 bg-light'>"))
             )
             .append(
-              $("<tr id='rack" + rack["id"] + "'>")
+              $("<tr id='rack" + rack["id"] + "' class='p-3'>")
               .append(
                 $("<td class='loader'>")
                 .append(

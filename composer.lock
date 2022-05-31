@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0e25ca325bac15a6690397f38c5374e8",
+    "content-hash": "c79a50306f247d1c931a060aedcafa4a",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1777,6 +1777,75 @@
                 }
             ],
             "time": "2022-05-05T09:31:05+00:00"
+        },
+        {
+            "name": "handcraftedinthealps/goodby-csv",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/handcraftedinthealps/goodby-csv.git",
+                "reference": "ff31e558a87f310d94900ab5e8285002d5482835"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/handcraftedinthealps/goodby-csv/zipball/ff31e558a87f310d94900ab5e8285002d5482835",
+                "reference": "ff31e558a87f310d94900ab5e8285002d5482835",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2",
+                "symfony/polyfill-mbstring": "^1.0"
+            },
+            "replace": {
+                "goodby/csv": "self.version"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "^1.1",
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^8.5",
+                "rector/rector": "^0.12.5",
+                "suin/php-expose": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Goodby\\CSV": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "reoring",
+                    "email": "mori.reo@gmail.com",
+                    "homepage": "https://www.facebook.com/reoring",
+                    "role": "Developer"
+                },
+                {
+                    "name": "suin",
+                    "email": "suinyeze@gmail.com",
+                    "homepage": "https://www.facebook.com/suinyeze",
+                    "role": "Developer, Renaming Specialist"
+                },
+                {
+                    "name": "Handcrafted in the alps contributors",
+                    "homepage": "https://github.com/handcraftedinthealps/goodby-csv/graphs/contributors",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "CSV import/export library",
+            "homepage": "https://github.com/handcraftedinthealps/goodby-csv",
+            "keywords": [
+                "csv",
+                "export",
+                "import"
+            ],
+            "support": {
+                "source": "https://github.com/handcraftedinthealps/goodby-csv/tree/1.4.0"
+            },
+            "time": "2021-11-26T21:56:47+00:00"
         },
         {
             "name": "laminas/laminas-code",

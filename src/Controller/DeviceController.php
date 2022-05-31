@@ -8,7 +8,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Device;
-use App\Entity\DeviceGroup;
 
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -91,6 +90,17 @@ class DeviceController extends AbstractController
             ->setAction(Crud::PAGE_EDIT)
             ->setEntityId($id)
             ->generateUrl();
+
+        $url_list_reservation = $adminUrlGenerator
+            ->setController('App\Controller\Admin\ReservationCrudController')
+            ->setAction(Crud::PAGE_INDEX)
+            //->setFilter($device->getName())
+            ->generateUrl();
+
+        $url_new_reservation = $adminUrlGenerator
+            ->setController('App\Controller\Admin\ReservationCrudController')
+            ->setAction(Crud::PAGE_NEW)
+            ->generateUrl();
  
         $data =  [
             'id' => $device->getId(),
@@ -103,6 +113,8 @@ class DeviceController extends AbstractController
                'url_link' => $device->getIpv4().$device->getDeviceGroup()->getWebInterface(),
                'url_show' => $show_url,
                'url_edit' => $edit_url,
+               'url_list_reservation' => $url_list_reservation,
+               'url_new_reservation' => $url_new_reservation,
         ];
          
         if ($data) {

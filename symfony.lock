@@ -107,6 +107,9 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.12"
     },
+    "handcraftedinthealps/goodby-csv": {
+        "version": "1.4.0"
+    },
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
