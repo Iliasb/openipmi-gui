@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 
 
 use App\Entity\Location;
@@ -69,6 +72,21 @@ class DashboardController extends AbstractDashboardController
         return $this->render('dashboard.html.twig', [
             'locations' => $locations,
         ]);
+    }
+
+    public function configureActions(): Actions
+    {
+        return parent::configureActions()
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->update(Crud::PAGE_DETAIL, Action::EDIT, static function (Action $action) {
+                return $action->setIcon('fa fa-edit');
+            })
+            ->update(Crud::PAGE_DETAIL, Action::INDEX, static function (Action $action) {
+                return $action->setIcon('fa fa-list');
+            })
+            ->update(Crud::PAGE_INDEX, Action::NEW, static function (Action $action) {
+                return $action->setIcon('fa fa-plus');
+            });
     }
 
     public function configureDashboard(): Dashboard

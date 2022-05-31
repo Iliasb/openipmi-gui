@@ -8,6 +8,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Device;
+use App\Entity\DeviceGroup;
+
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
  
 /**
  * @Route("/api", name="api_")
@@ -22,15 +26,28 @@ class DeviceController extends AbstractController
     /**
      * @Route("/device", name="device_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(AdminUrlGenerator $adminUrlGenerator): Response
     {
         $devices = $this->doctrine
             ->getRepository(Device::class)
-            ->findAll();
+            ->findAll(array('positionStart' => 'DESC'));
  
         $data = [];
  
         foreach ($devices as $device) {
+
+            $show_url = $adminUrlGenerator
+            ->setController('App\Controller\Admin\DeviceCrudController')
+            ->setAction(Crud::PAGE_DETAIL)
+            ->setEntityId($device->getId())
+            ->generateUrl();
+
+            $edit_url = $adminUrlGenerator
+            ->setController('App\Controller\Admin\DeviceCrudController')
+            ->setAction(Crud::PAGE_EDIT)
+            ->setEntityId($device->getId())
+            ->generateUrl();
+
            $data[] = [
                'id' => $device->getId(),
                'name' => $device->getName(),
@@ -39,6 +56,9 @@ class DeviceController extends AbstractController
                'positionStart' => $device->getPositionStart(),
                'positionEnd' => $device->getPositionEnd(),
                'rack' => $device->getRack()->getId(),
+               'url_link' => $device->getIpv4().$device->getDeviceGroup()->getWebInterface(),
+               'url_show' => $show_url,
+               'url_edit' => $edit_url,
            ];
         }
  
@@ -49,7 +69,7 @@ class DeviceController extends AbstractController
     /**
      * @Route("/device/{id}", name="device_show", methods={"GET"})
      */
-    public function show(int $id): Response
+    public function show(int $id,AdminUrlGenerator $adminUrlGenerator): Response
     {
         $device = $this->doctrine
             ->getRepository(Device::class)
@@ -59,6 +79,18 @@ class DeviceController extends AbstractController
  
             return $this->json('No device found for id' . $id, 404);
         }
+
+        $show_url = $adminUrlGenerator
+            ->setController('App\Controller\Admin\DeviceCrudController')
+            ->setAction(Crud::PAGE_DETAIL)
+            ->setEntityId($id)
+            ->generateUrl();
+
+        $edit_url = $adminUrlGenerator
+            ->setController('App\Controller\Admin\DeviceCrudController')
+            ->setAction(Crud::PAGE_EDIT)
+            ->setEntityId($id)
+            ->generateUrl();
  
         $data =  [
             'id' => $device->getId(),
@@ -68,6 +100,9 @@ class DeviceController extends AbstractController
                'positionStart' => $device->getPositionStart(),
                'positionEnd' => $device->getPositionEnd(),
                'rack' => $device->getRack()->getId(),
+               'url_link' => $device->getIpv4().$device->getDeviceGroup()->getWebInterface(),
+               'url_show' => $show_url,
+               'url_edit' => $edit_url,
         ];
          
         if ($data) {
@@ -80,13 +115,26 @@ class DeviceController extends AbstractController
     /**
      * @Route("/device/rack/{rack_id}", name="device_location_index", methods={"GET"})
      */
-    public function showLocation(int $rack_id): Response
+    public function showLocation(int $rack_id,AdminUrlGenerator $adminUrlGenerator): Response
     {
         $devices = $this->doctrine
             ->getRepository(Device::class)
-            ->findBy(['rack' => $rack_id],);
+            ->findBy(['rack' => $rack_id],array('positionStart' => 'DESC'));
  
         foreach ($devices as $device) {
+
+            $show_url = $adminUrlGenerator
+            ->setController('App\Controller\Admin\DeviceCrudController')
+            ->setAction(Crud::PAGE_DETAIL)
+            ->setEntityId($device->getId())
+            ->generateUrl();
+
+            $edit_url = $adminUrlGenerator
+            ->setController('App\Controller\Admin\DeviceCrudController')
+            ->setAction(Crud::PAGE_EDIT)
+            ->setEntityId($device->getId())
+            ->generateUrl();
+
            $data[] = [
                'id' => $device->getId(),
                'name' => $device->getName(),
@@ -95,6 +143,9 @@ class DeviceController extends AbstractController
                'positionStart' => $device->getPositionStart(),
                'positionEnd' => $device->getPositionEnd(),
                'rack' => $device->getRack()->getId(),
+               'url_link' => $device->getIpv4().$device->getDeviceGroup()->getWebInterface(),
+               'url_show' => $show_url,
+               'url_edit' => $edit_url,
            ];
         }
  

@@ -4,151 +4,140 @@
         <h1 class="title">Dashboard</h1>
 {% endblock %}
 
-{% block content_footer_wrapper 'Open IPMI' %}
+{% block content_footer_wrapper '' %}
 
 {% block body_javascript %}
 
 <script>
-$(document).ready(function(){
+$(document).ready(function() {
 
-    $('.location').on("click", function(){
 
-        $(".racks").html('');
-        var jqxhr = $.ajax( "/api/rack/location/"+$(this).attr("id"), function() {
-        })
-          .done(function(racks) {
-              addRacks(racks);
-              
-          })
-          .fail(function() {
-            //alert( "No racks found" );
-            $(".racks").html('No racks found');
-          })
+  $('.location').on("click", function() {
 
-    });
+    $(".racks").html('');
+    var jqxhr = $.ajax("/api/rack/location/" + $(this).attr("id"), function() {})
+      .done(function(racks) {
+        addRacks(racks);
 
-    function appendDevices(rack) {
+      })
+      .fail(function() {
+        //alert( "No racks found" );
+        $(".racks").html('No racks found');
+      })
 
-        var jqxhr = $.ajax( "/api/device/rack/"+rack, function() {
-        })
-          .done(function(devices) {
-              
-            $("#rack"+rack).html('');
-            devices.forEach(getDevice);
-            function getDevice(device) {
+  });
 
-              //alert( "#rack"+rack);
-              var html = $("<tr>")
+  function appendDevices(rack) {
+
+    var jqxhr = $.ajax("/api/device/rack/" + rack, function() {})
+      .done(function(devices) {
+
+        $("#rack" + rack).html('');
+        devices.forEach(getDevice);
+
+        function getDevice(device) {
+
+          //alert( "#rack"+rack);
+          var html = $("<tr class='device'>")
+            .append(
+              $("<td>").text(device["positionStart"] + "-" + device["positionEnd"])
+
+            )
+            .append(
+              $("<td>")
               .append(
-                  $("<td>")
-                  .append(
-                      $("<a href=''>").text(device["positionStart"]+"-"+device["positionEnd"])
-                  )
+                $("<a href='" + device["url_show"] + "'>").text(device["name"])
               )
+            )
+
+            .append(
+              $("<td>")
               .append(
-                  $("<td>")
-                  .append(
-                      $("<a href='{{ path('dashboard') }}'>").text(device["name"])
-                  )
+                $("<a href='" + device["url_show"] + "'>")
+                .append(
+                  $("<span class='fa fa-power-off'>")
+                )
               )
-              
+            )
+            .append(
+              $("<td>")
               .append(
-                  $("<td>")
-                  .append(
-                      $("<a href=''>")
-                      .append(
-                          $("<span class='fa fa-power-off'>")
-                      )
-                  )
+                $("<a href='http://" + device["url_link"] +"'>")
+                .append(
+                  $("<span class='fa fa-link'>")
+                )
               )
+            )
+            .append(
+              $("<td>")
               .append(
-                  $("<td>")
-                  .append(
-                      $("<a href='http://"+device["ipv4"]+"'>")
-                      .append(
-                          $("<span class='fa fa-link'>")
-                      )
-                  )
+                $("<a href=''>")
+                .append(
+                  $("<span class='fa fa-book'>")
+                )
               )
-              .append(
-                  $("<td>")
-                  .append(
-                      $("<a href=''>")
-                      .append(
-                          $("<span class='fa fa-book'>")
-                      )
-                  )
-              );
+            );
 
 
 
-              $("#rack"+rack).after(html);
+          $("#rack" + rack).after(html);
 
 
-            }
+        }
 
 
+      })
+      .fail(function() {
+        $("#rack" + rack).html('');
+        $("#rack" + rack).append($('<p>').text('No devices found.'));
+        //alert( "No devices" );
+      })
+  }
 
+  function addRacks(racks) {
 
+    $(".rack").remove();
 
+    racks.forEach(getRack);
 
+    function getRack(rack) {
 
-
-
-
-
-              
-          })
-          .fail(function() {
-            $("#rack"+rack).html('');
-            $("#rack"+rack).append($('<p>').text('No devices found.'));
-            //alert( "No devices" );
-          })
-    }
-
-    function addRacks(racks) {
-      racks.forEach(getRack);
-
-      function getRack(rack) {
-
-        var html = $("<div class='col rack'>")
-              .append($("<table class='table table-sm table-hover border rounded-3 ' style='width:300px; float: left;'></table>")
+      var html = $("<div class='col rack'>")
+        .append($("<table class='table table-sm table-hover border rounded-3' style='width:300px; float: left;'></table>")
           .append(
-              $("<tbody>")
+            $("<tbody>")
+            .append(
+              $("<tr>")
               .append(
-                  $("<tr>")
+                $("<th>")
+                .append(
+                  $("<h5>")
                   .append(
-                      $("<th>")
-                      .append(
-                          $("<h5>")
-                          .append(
-                            $("<a href=''>").text('Rack '+rack["tag"])
-                          )
-                      )
+                    $("<a href='" + rack["url_show"] + "'>").text('Rack ' + rack["tag"])
                   )
+                )
               )
+            )
+            .append(
+              $("<tr id='rack" + rack["id"] + "'>")
               .append(
-                  $("<tr id='rack"+rack["id"]+"'>")
-                  .append(
-                      $("<td class='loader'>")
-                      .append(
-                        $("<p>").text('Loading devices ...')
-                      )
-                      
-                  )
+                $("<td class='loader'>")
+                .append(
+                  $("<p>").text('Loading devices ...')
+                )
+
               )
+            )
 
           ));
 
-        if(!$.trim( $('.racks').html()).length) {
-          $(".racks").html(html);
-        }else{
-          $(".rack").after(html);
-        }
+      $(".racks").append(html);
+      appendDevices(rack["id"]);
 
-        appendDevices(rack["id"]);
-      }
-    } 
+
+
+    }
+  }
 
 });
 </script>
@@ -165,7 +154,13 @@ $(document).ready(function(){
         <div class="col location" id="{{ location.id }}">
           <div class="card" style="cursor: pointer;">
             <div class="card-header">
-              <a href="">{{ location.name }}</a>
+              <a href="
+                        {{ ea_url()
+                            .setController('App\\Controller\\Admin\\LocationCrudController')
+                            .setAction('detail')
+                            .setEntityId(location.id)
+                        }}
+              ">{{ location.name }}</a>
             </div>
             <div class="card-body">
               <p class="card-text"><span data-feather="columns"></span> Racks: {{ location.getRackCount }}</p>

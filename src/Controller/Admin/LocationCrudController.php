@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use Symfony\Component\Routing\Annotation\Route;
 
 class LocationCrudController extends AbstractCrudController
 {
@@ -30,4 +31,5 @@ class LocationCrudController extends AbstractCrudController
         yield Field::new('createdAt')
             ->hideOnForm();
     }
+
 }
