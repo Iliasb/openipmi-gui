@@ -49,6 +49,18 @@ class DeviceCrudController extends AbstractCrudController
             ->add(Crud::PAGE_INDEX, $exportAction);
     }
 
+    public function configureFilters(Filters $filters): Filters
+    {
+        return parent::configureFilters($filters)->add('name')
+            ->add('ipv4')
+            ->add('ipv6')
+            ->add('positionStart')
+            ->add('positionEnd')
+            ->add('deviceGroup')
+            ->add('rack')
+            ->add('reservations');
+    }
+
     public function configureFields(string $pageName): iterable
     {
         //yield IdField::new('id')
@@ -62,7 +74,7 @@ class DeviceCrudController extends AbstractCrudController
 
         yield AssociationField::new('deviceGroup');
         yield AssociationField::new('rack');
-        yield AssociationField::new('reservations');
+        yield AssociationField::new('reservations')->hideOnForm();
         //yield Field::new('createdAt')
         //    ->hideOnForm();
     }
