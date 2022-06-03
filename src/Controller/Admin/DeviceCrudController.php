@@ -51,9 +51,9 @@ class DeviceCrudController extends AbstractCrudController
 
     public function configureFilters(Filters $filters): Filters
     {
-        return parent::configureFilters($filters)->add('name')
-            ->add('ipv4')
-            ->add('ipv6')
+        return parent::configureFilters($filters)
+            ->add('name')
+            ->add('serialNr')
             ->add('positionStart')
             ->add('positionEnd')
             ->add('deviceGroup')
@@ -67,13 +67,16 @@ class DeviceCrudController extends AbstractCrudController
         //   ->onlyOnIndex();
 
         yield Field::new('name');
-        yield Field::new('ipv4');
-        yield Field::new('ipv6');
+        yield Field::new('serialNr');
+        //yield Field::new('ipv6');
         yield Field::new('positionStart');
         yield Field::new('positionEnd');
 
         yield AssociationField::new('deviceGroup');
+        yield AssociationField::new('project');
         yield AssociationField::new('rack');
+
+        yield AssociationField::new('addresses');
         yield AssociationField::new('reservations')->hideOnForm();
         //yield Field::new('createdAt')
         //    ->hideOnForm();

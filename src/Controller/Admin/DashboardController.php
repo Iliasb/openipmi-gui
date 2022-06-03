@@ -23,6 +23,9 @@ use App\Entity\Device;
 use App\Entity\Reservation;
 use App\Entity\DeviceGroup;
 use App\Entity\User;
+use App\Entity\Project;
+use App\Entity\Address;
+use App\Entity\Network;
 
 use App\Repository\LocationRepository;
 
@@ -100,14 +103,23 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fas fa-tachometer ');
+        yield MenuItem::linkToDashboard('Dashboard', 'fas fa-tachometer');
         yield MenuItem::linkToCrud('Reservations', 'fas fa-book', Reservation::class);
 
-        yield MenuItem::section('Administration');
-        yield MenuItem::linkToCrud('Locations', 'fas fa-globe', Location::class);
+
+
+        yield MenuItem::section('Assets');
         yield MenuItem::linkToCrud('Racks', 'fas fa-server', Rack::class);
         yield MenuItem::linkToCrud('Devices', 'fas fa-desktop', Device::class);
         yield MenuItem::linkToCrud('Device Group', 'fas fa-object-group', DeviceGroup::class);
+
+        yield MenuItem::section('Networking');
+        yield MenuItem::linkToCrud('Networks', 'fas fa-sitemap', Network::class);
+        yield MenuItem::linkToCrud('IP Addresses', 'fas fa-arrows-h', Address::class);
+
+        yield MenuItem::section('Administration');
+        yield MenuItem::linkToCrud('Projects', 'fas fa-cubes', Project::class);
+        yield MenuItem::linkToCrud('Locations', 'fas fa-globe', Location::class);
         yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);
         
     }

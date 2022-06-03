@@ -27,12 +27,6 @@ class DeviceGroup
     #[ORM\OneToMany(mappedBy: 'deviceGroup', targetEntity: Device::class)]
     private $device;
 
-    #[ORM\Column(type: 'boolean')]
-    private $isSshCapable;
-
-    #[ORM\Column(type: 'boolean')]
-    private $isVncCapable;
-
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $webInterface;
 
@@ -108,30 +102,6 @@ class DeviceGroup
                 $device->setDeviceGroup(null);
             }
         }
-
-        return $this;
-    }
-
-    public function isIsSshCapable(): ?bool
-    {
-        return $this->isSshCapable;
-    }
-
-    public function setIsSshCapable(bool $isSshCapable): self
-    {
-        $this->isSshCapable = $isSshCapable;
-
-        return $this;
-    }
-
-    public function isIsVncCapable(): ?bool
-    {
-        return $this->isVncCapable;
-    }
-
-    public function setIsVncCapable(bool $isVncCapable): self
-    {
-        $this->isVncCapable = $isVncCapable;
 
         return $this;
     }

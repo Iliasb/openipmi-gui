@@ -50,12 +50,10 @@ class DeviceController extends AbstractController
            $data[] = [
                'id' => $device->getId(),
                'name' => $device->getName(),
-               'ipv4' => $device->getIpv4(),
-               'ipv6' => $device->getIpv6(),
                'positionStart' => $device->getPositionStart(),
                'positionEnd' => $device->getPositionEnd(),
                'rack' => $device->getRack()->getId(),
-               'url_link' => $device->getIpv4().$device->getDeviceGroup()->getWebInterface(),
+               //'url_link' => $device->getIpv4().$device->getDeviceGroup()->getWebInterface(),
                'url_show' => $show_url,
                'url_edit' => $edit_url,
            ];
@@ -105,12 +103,10 @@ class DeviceController extends AbstractController
         $data =  [
             'id' => $device->getId(),
                'name' => $device->getName(),
-               'ipv4' => $device->getIpv4(),
-               'ipv6' => $device->getIpv6(),
                'positionStart' => $device->getPositionStart(),
                'positionEnd' => $device->getPositionEnd(),
                'rack' => $device->getRack()->getId(),
-               'url_link' => $device->getIpv4().$device->getDeviceGroup()->getWebInterface(),
+               //'url_link' => $device->getIpv4().$device->getDeviceGroup()->getWebInterface(),
                'url_show' => $show_url,
                'url_edit' => $edit_url,
                'url_list_reservation' => $url_list_reservation,
@@ -150,12 +146,10 @@ class DeviceController extends AbstractController
            $data[] = [
                'id' => $device->getId(),
                'name' => $device->getName(),
-               'ipv4' => $device->getIpv4(),
-               'ipv6' => $device->getIpv6(),
                'positionStart' => $device->getPositionStart(),
                'positionEnd' => $device->getPositionEnd(),
                'rack' => $device->getRack()->getId(),
-               'url_link' => $device->getIpv4().$device->getDeviceGroup()->getWebInterface(),
+               //'url_link' => $device->getIpv4().$device->getDeviceGroup()->getWebInterface(),
                'url_show' => $show_url,
                'url_edit' => $edit_url,
            ];
