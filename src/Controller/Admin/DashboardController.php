@@ -74,6 +74,20 @@ class DashboardController extends AbstractDashboardController
         ]);
     }
 
+
+
+    #[Route('/calendar', name: 'calendar')]
+    public function calendar(): Response
+    {
+    
+        //$reservations = $this->reservationRepository
+        //    ->findAll();
+
+        return $this->render('calendar.html.twig', [
+           // 'reservations' => $reservations,
+        ]);
+    }
+
     public function configureActions(): Actions
     {
         return parent::configureActions()
@@ -102,7 +116,8 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fas fa-tachometer');
-        yield MenuItem::linkToCrud('Reservations', 'fas fa-book', Reservation::class);
+        yield MenuItem::linktoRoute('Calendar', 'fa fa-calendar', 'calendar');
+        
 
         yield MenuItem::section('Assets');
         yield MenuItem::linkToCrud('Racks', 'fas fa-server', Rack::class);
@@ -118,6 +133,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Projects', 'fas fa-cubes', Project::class);
         yield MenuItem::linkToCrud('Locations', 'fas fa-globe', Location::class);
         yield MenuItem::linkToCrud('Users', 'fas fa-users', User::class);
+        yield MenuItem::linkToCrud('Reservations', 'fas fa-book', Reservation::class);
         
     }
 
