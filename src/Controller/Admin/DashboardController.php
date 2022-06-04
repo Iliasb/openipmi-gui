@@ -46,7 +46,6 @@ class DashboardController extends AbstractDashboardController
 
 
 
-
     #[Route('/', name: 'dashboard')]
     public function index(): Response
     {
@@ -69,8 +68,6 @@ class DashboardController extends AbstractDashboardController
 
         $locations = $this->locationRepository
             ->findAll();
-
-
 
         return $this->render('dashboard.html.twig', [
             'locations' => $locations,
@@ -97,7 +94,8 @@ class DashboardController extends AbstractDashboardController
         return Dashboard::new()
             ->setTitle('Open ipmi')
             ->setFaviconPath('favicon.svg')
-            ->generateRelativeUrls();
+            ->renderContentMaximized();
+            //->generateRelativeUrls();
             //->renderSidebarMinimized();
     }
 

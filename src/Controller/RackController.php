@@ -51,8 +51,11 @@ class RackController extends AbstractController
            $data[] = [
                'id' => $rack->getId(),
                'tag' => $rack->getTag(),
+               'description' => $rack->getDescription(),
                'devices' => $rack->getDeviceCount(),
                'locationId' => $rack->getLocation()->getId(),
+               'created' => $rack->getCreated(),
+               'updated' => $rack->getUpdated(),
                'url_show' => $show_url,
                'url_edit' => $edit_url,
            ];
@@ -91,8 +94,11 @@ class RackController extends AbstractController
         $data =  [
             'id' => $rack->getId(),
             'tag' => $rack->getTag(),
+            'description' => $rack->getDescription(),
             'devices' => $rack->getDeviceCount(),
             'locationId' => $rack->getLocation()->getId(),
+            'created' => $rack->getCreated(),
+            'updated' => $rack->getUpdated(),
             'url_show' => $show_url,
             'url_edit' => $edit_url,
         ];
@@ -129,8 +135,11 @@ class RackController extends AbstractController
            $data[] = [
                'id' => $rack->getId(),
                'tag' => $rack->getTag(),
+               'description' => $rack->getDescription(),
                'devices' => $rack->getDeviceCount(),
                'locationId' => $rack->getLocation()->getId(),
+               'created' => $rack->getCreated(),
+               'updated' => $rack->getUpdated(),
                'url_show' => $show_url,
                'url_edit' => $edit_url,
            ];

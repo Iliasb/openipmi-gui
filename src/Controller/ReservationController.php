@@ -39,6 +39,8 @@ class ReservationController extends AbstractController
                'startAt' => $reservation->getStartAt(),
                'stopAt' => $reservation->getStopAt(),
                'user' => $reservation->getUser()->getId(),
+               'created' => $reservation->getCreated(),
+               'updated' => $reservation->getUpdated(),
            ];
         }
  
@@ -65,6 +67,8 @@ class ReservationController extends AbstractController
                'startAt' => $reservation->getStartAt(),
                'stopAt' => $reservation->getStopAt(),
                'user' => $reservation->getUser()->getId(),
+               'created' => $reservation->getCreated(),
+               'updated' => $reservation->getUpdated(),
         ];
          
         return $this->json($data);
@@ -87,6 +91,8 @@ class ReservationController extends AbstractController
                'startAt' => $reservation->getStartAt(),
                'stopAt' => $reservation->getStopAt(),
                'user' => $reservation->getUser()->getId(),
+               'created' => $reservation->getCreated(),
+               'updated' => $reservation->getUpdated(),
            ];
         }
 

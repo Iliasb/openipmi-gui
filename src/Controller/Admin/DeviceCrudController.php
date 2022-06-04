@@ -39,8 +39,13 @@ class DeviceCrudController extends AbstractCrudController
             //->renderSidebarMinimized()
             //->setDateFormat('...')
             ->setPageTitle('index', '%entity_label_plural%')
-            ->setDefaultSort(['name' => 'DESC']);
-        ;
+            ->setDefaultSort(['name' => 'DESC'])
+            //->overrideTemplates([
+                //'crud/index' => 'Device/index.html.twig',
+                //'crud/field/textarea' => 'admin/fields/dynamic_textarea.html.twig',
+            //])
+            ;
+        
     }
 
     public function export(AdminContext $context, CsvExporter $csvExporter)
@@ -105,8 +110,6 @@ class DeviceCrudController extends AbstractCrudController
 
         yield AssociationField::new('addresses');
         yield AssociationField::new('reservations')->hideOnForm();
-        //yield Field::new('createdAt')
-        //    ->hideOnForm();
 
 
     }
