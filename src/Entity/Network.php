@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Gedmo\Mapping\Annotation as Gedmo;
+
 #[ORM\Entity(repositoryClass: NetworkRepository::class)]
 class Network
 {
@@ -26,6 +28,30 @@ class Network
 
     #[ORM\OneToMany(mappedBy: 'network', targetEntity: Address::class, orphanRemoval: true)]
     private $addresses;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $description;
+
+
+
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: 'date')]
+    private $created;
+
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'date')]
+    private $updated;
+
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
 
     public function __construct()
     {
@@ -106,5 +132,17 @@ class Network
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

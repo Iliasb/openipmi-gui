@@ -36,6 +36,8 @@ class RackCrudController extends AbstractCrudController
         yield Field::new('tag');
         yield Field::new('size');
 
+        yield Field::new('description')->hideOnIndex();
+
         yield AssociationField::new('location');
         yield AssociationField::new('devices')->onlyOnIndex();
         //yield Field::new('createdAt')

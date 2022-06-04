@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+use Gedmo\Mapping\Annotation as Gedmo;
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -34,6 +36,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reservation::class, orphanRemoval: true)]
     private $reservations;
+
+
+
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: 'date')]
+    private $created;
+
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'date')]
+    private $updated;
+
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
 
     public function __construct()
     {

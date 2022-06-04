@@ -36,6 +36,8 @@ class NetworkCrudController extends AbstractCrudController
         yield Field::new('ipRange');
         yield Field::new('vlan');
 
+        yield Field::new('description')->hideOnIndex();
+
         yield AssociationField::new('addresses');
 
         

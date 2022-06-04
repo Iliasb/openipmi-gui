@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
 class Address
@@ -43,6 +44,28 @@ class Address
     #[ORM\ManyToOne(targetEntity: Network::class, inversedBy: 'addresses')]
     #[ORM\JoinColumn(nullable: false)]
     private $network;
+
+
+
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: 'date')]
+    private $created;
+
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'date')]
+    private $updated;
+
+
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
 
     public function getId(): ?int
     {

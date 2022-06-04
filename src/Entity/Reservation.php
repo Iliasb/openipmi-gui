@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\ReservationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+use Gedmo\Mapping\Annotation as Gedmo;
+
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
 {
@@ -26,6 +28,27 @@ class Reservation
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
+
+
+
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: 'date')]
+    private $created;
+
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'date')]
+    private $updated;
+
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
 
     public function getId(): ?int
     {

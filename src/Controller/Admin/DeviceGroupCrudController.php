@@ -36,6 +36,7 @@ class DeviceGroupCrudController extends AbstractCrudController
         yield Field::new('name');
         yield Field::new('brand');
         yield Field::new('model');
+        yield Field::new('description')->hideOnIndex();
         yield Field::new('webInterface');
 
         

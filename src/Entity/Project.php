@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Gedmo\Mapping\Annotation as Gedmo;
+
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
 {
@@ -23,6 +25,27 @@ class Project
 
     #[ORM\OneToMany(mappedBy: 'project', targetEntity: Device::class)]
     private $devices;
+
+
+
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: 'date')]
+    private $created;
+
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'date')]
+    private $updated;
+
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
 
     public function __construct()
     {

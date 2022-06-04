@@ -27,14 +27,25 @@ class ProjectCrudController extends AbstractCrudController
         return Project::class;
     }
 
-    /*
     public function configureFields(string $pageName): iterable
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
+        //yield IdField::new('id')
+        //   ->onlyOnIndex();
+
+        
+        yield Field::new('name');
+        yield Field::new('description')->hideOnIndex();
+
+        
+        yield AssociationField::new('devices');
+        
     }
-    */
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return parent::configureFilters($filters)
+            ->add('name')
+            ->add('description')
+            ->add('devices');
+    }
 }

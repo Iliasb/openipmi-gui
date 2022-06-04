@@ -36,10 +36,10 @@ class LocationCrudController extends AbstractCrudController
         yield Field::new('name');
         yield Field::new('slug');
 
+        yield Field::new('description')->hideOnIndex();
+
         yield AssociationField::new('racks')
             ->onlyOnIndex();
-        yield Field::new('createdAt')
-            ->hideOnForm();
     }
 
     public function configureFilters(Filters $filters): Filters
@@ -47,8 +47,7 @@ class LocationCrudController extends AbstractCrudController
         return parent::configureFilters($filters)
             ->add('name')
             ->add('slug')
-            ->add('racks')
-            ->add('createdAt');
+            ->add('racks');
     }
 
 }

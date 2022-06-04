@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Gedmo\Mapping\Annotation as Gedmo;
+
 #[ORM\Entity(repositoryClass: LocationRepository::class)]
 class Location
 {
@@ -21,14 +23,37 @@ class Location
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $slug;
 
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    private $createdAt;
-
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $gps;
 
     #[ORM\OneToMany(mappedBy: 'location', targetEntity: Rack::class, orphanRemoval: true)]
     private $racks;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $description;
+
+
+
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: 'date')]
+    private $created;
+
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'date')]
+    private $updated;
+
+
+
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
 
     public function __construct()
     {
@@ -60,18 +85,6 @@ class Location
     public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(?\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -136,5 +149,17 @@ class Location
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

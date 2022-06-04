@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Gedmo\Mapping\Annotation as Gedmo;
+
 #[ORM\Entity(repositoryClass: DeviceGroupRepository::class)]
 class DeviceGroup
 {
@@ -29,6 +31,33 @@ class DeviceGroup
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $webInterface;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $description;
+
+
+
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(type: 'date')]
+    private $created;
+
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'date')]
+    private $updated;
+
+
+
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
 
     public function __construct()
     {
@@ -121,5 +150,17 @@ class DeviceGroup
     public function __toString(): string
     {
         return $this->getName();
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

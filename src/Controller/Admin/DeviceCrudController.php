@@ -20,6 +20,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Factory\FilterFactory;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 
 
 class DeviceCrudController extends AbstractCrudController
@@ -52,12 +53,15 @@ class DeviceCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
-            ->add('name')
-            ->add('serialNr')
             ->add('positionStart')
             ->add('positionEnd')
+            ->add('name')
+            ->add('serialNr')
+
             ->add('deviceGroup')
             ->add('rack')
+            ->add('project')
+            ->add('addresses')
             ->add('reservations');
     }
 
@@ -66,11 +70,17 @@ class DeviceCrudController extends AbstractCrudController
         //yield IdField::new('id')
         //   ->onlyOnIndex();
 
+        //yield FormField::addPanel('Details')
+        //    ->collapsible()
+         //   ->setIcon('fa fa-info')
+         //   ->setHelp('Additional Details');
+
+        yield Field::new('positionStart');
         yield Field::new('name');
         yield Field::new('serialNr');
-        //yield Field::new('ipv6');
-        yield Field::new('positionStart');
-        yield Field::new('positionEnd');
+        yield Field::new('description')->hideOnIndex();
+
+        //yield Field::new('positionEnd');
 
         yield AssociationField::new('deviceGroup');
         yield AssociationField::new('project');
@@ -80,5 +90,7 @@ class DeviceCrudController extends AbstractCrudController
         yield AssociationField::new('reservations')->hideOnForm();
         //yield Field::new('createdAt')
         //    ->hideOnForm();
+
+
     }
 }
