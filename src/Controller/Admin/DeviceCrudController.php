@@ -30,6 +30,19 @@ class DeviceCrudController extends AbstractCrudController
         return Device::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Device')
+            ->setEntityLabelInPlural('Devices')
+            ->renderContentMaximized()
+            //->renderSidebarMinimized()
+            //->setDateFormat('...')
+            ->setPageTitle('index', '%entity_label_plural%')
+            ->setDefaultSort(['name' => 'DESC']);
+        ;
+    }
+
     public function export(AdminContext $context, CsvExporter $csvExporter)
     {
         $fields = FieldCollection::new($this->configureFields(Crud::PAGE_INDEX));
@@ -70,17 +83,21 @@ class DeviceCrudController extends AbstractCrudController
         //yield IdField::new('id')
         //   ->onlyOnIndex();
 
-        //yield FormField::addPanel('Details')
-        //    ->collapsible()
-         //   ->setIcon('fa fa-info')
-         //   ->setHelp('Additional Details');
+        yield FormField::addPanel('Details');
+            //->collapsible()
+            //->setIcon('fa fa-info')
+            //->setHelp('Device details');
 
-        yield Field::new('positionStart');
+        yield Field::new('positionStart')->setHelp('Starting position of the device in the rack.');
+        yield Field::new('positionEnd')->hideOnIndex()->setHelp('Stop position of the device in the rack.');
         yield Field::new('name');
         yield Field::new('serialNr');
         yield Field::new('description')->hideOnIndex();
 
-        //yield Field::new('positionEnd');
+        yield FormField::addPanel('Properties');
+            //->collapsible()
+            //->setIcon('fa fa-info')
+            //->setHelp('Device properties');
 
         yield AssociationField::new('deviceGroup');
         yield AssociationField::new('project');

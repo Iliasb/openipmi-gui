@@ -27,6 +27,19 @@ class ProjectCrudController extends AbstractCrudController
         return Project::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Project')
+            ->setEntityLabelInPlural('Projects')
+            ->renderContentMaximized()
+            //->renderSidebarMinimized()
+            //->setDateFormat('...')
+            ->setPageTitle('index', '%entity_label_plural%')
+            ->setDefaultSort(['name' => 'DESC']);
+        ;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         //yield IdField::new('id')
@@ -37,7 +50,7 @@ class ProjectCrudController extends AbstractCrudController
         yield Field::new('description')->hideOnIndex();
 
         
-        yield AssociationField::new('devices');
+        yield AssociationField::new('devices')->hideOnForm();
         
     }
 

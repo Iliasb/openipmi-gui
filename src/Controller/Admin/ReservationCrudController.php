@@ -28,6 +28,19 @@ class ReservationCrudController extends AbstractCrudController
         return Reservation::class;
     }
 
+        public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Reservation')
+            ->setEntityLabelInPlural('Reservations')
+            ->renderContentMaximized()
+            //->renderSidebarMinimized()
+            //->setDateFormat('...')
+            ->setPageTitle('index', '%entity_label_plural%')
+            ->setDefaultSort(['startAt' => 'DESC']);
+        ;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         //yield IdField::new('id')

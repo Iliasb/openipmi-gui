@@ -28,6 +28,19 @@ class UserCrudController extends AbstractCrudController
         return User::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('User')
+            ->setEntityLabelInPlural('Users')
+            ->renderContentMaximized()
+            //->renderSidebarMinimized()
+            //->setDateFormat('...')
+            ->setPageTitle('index', '%entity_label_plural%')
+            ->setDefaultSort(['email' => 'DESC']);
+        ;
+    }
+
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)

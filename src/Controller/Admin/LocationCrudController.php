@@ -28,6 +28,19 @@ class LocationCrudController extends AbstractCrudController
         return Location::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Location')
+            ->setEntityLabelInPlural('Locations')
+            ->renderContentMaximized()
+            //->renderSidebarMinimized()
+            //->setDateFormat('...')
+            ->setPageTitle('index', '%entity_label_plural%')
+            ->setDefaultSort(['name' => 'DESC']);
+        ;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         //yield IdField::new('id')

@@ -27,6 +27,19 @@ class NetworkCrudController extends AbstractCrudController
         return Network::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Network')
+            ->setEntityLabelInPlural('Networks')
+            ->renderContentMaximized()
+            //->renderSidebarMinimized()
+            //->setDateFormat('...')
+            ->setPageTitle('index', '%entity_label_plural%')
+            ->setDefaultSort(['name' => 'DESC']);
+        ;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         //yield IdField::new('id')
@@ -38,7 +51,7 @@ class NetworkCrudController extends AbstractCrudController
 
         yield Field::new('description')->hideOnIndex();
 
-        yield AssociationField::new('addresses');
+        yield AssociationField::new('addresses')->hideOnForm();
 
         
     }

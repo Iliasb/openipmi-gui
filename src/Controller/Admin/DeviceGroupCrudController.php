@@ -28,6 +28,19 @@ class DeviceGroupCrudController extends AbstractCrudController
         return DeviceGroup::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Device group')
+            ->setEntityLabelInPlural('Device groups')
+            ->renderContentMaximized()
+            //->renderSidebarMinimized()
+            //->setDateFormat('...')
+            ->setPageTitle('index', '%entity_label_plural%')
+            ->setDefaultSort(['name' => 'DESC']);
+        ;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         //yield IdField::new('id')
