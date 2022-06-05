@@ -1,208 +1,42 @@
-{% extends "@EasyAdmin/page/content.html.twig" %} {% block content_title %}
-<h1 class="title">Calendar</h1>
-{% endblock %} {% block main %}
+{% extends "@EasyAdmin/page/content.html.twig" %} 
 
-<div class="container-fluid">
-    <div class="row mb-4">
-        <div class="col-xl-3">
-            <div class="card h-100">
-                <div class="card-body">
-                    <button type="button" class="btn btn-primary w-100" id="btn-new-event" data-bs-toggle="modal" data-bs-target="#event-modal"><span class="fa fa-calendar-plus-o"></span> Create new reservation</button>
-                    <div id="external-events">
-                        <br>
-                        <p class="text-muted">Drag and drop your event or click in the calendar</p>
-
-                        <div class=" text-light external-event fc-event rounded-2 bg-success mb-2" data-class="bg-success">
-                            <i class="fa fa-circle me-2 p-2"></i>New Event Planning
-                        </div>
-
-                        <div class=" text-light external-event fc-event rounded-2 bg-success mb-2" data-class="bg-success">
-                            <i class="fa fa-circle me-2 p-2"></i>New Event Planning
-                        </div>
-
-                        <div class=" text-light external-event fc-event rounded-2 bg-success mb-2" data-class="bg-success">
-                            <i class="fa fa-circle me-2 p-2"></i>New Event Planning
-                        </div>
-
-                        <div class=" text-light external-event fc-event rounded-2 bg-success mb-2" data-class="bg-success">
-                            <i class="fa fa-circle me-2 p-2"></i>New Event Planning
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <!-- end col-->
-        <div class="col-xl-9">
-            <div class="card h-100">
-                <div class="card-header">
-                    <span class="float-start w-25 my-2">
-                      <button class="btn btn-primary" type="submit"><span class="fa fa-arrow-left"></span></button>
-                      <button class="btn btn-primary" type="submit"><span class="fa fa-arrow-right"></span></button>
-                      <button class="btn btn-primary" type="submit">Today</button>
-                    </span>
-                                    <span class="float-start w-50 my-2" style="">
-                      <h3 class="text-center">22 june 2022</h3>
-                    </span>
-                                    <span class="float-end my-2">
-                      <button class="btn btn-primary" type="submit">Month</button>
-                      <button class="btn btn-primary" type="submit">Week</button>
-                      <button class="btn btn-primary" type="submit">Day</button>
-                    </span>
-                </div>
-                <div class="card-body p-0">
-
-                    
+{% block body_javascript %}
 
 
 
 
+<script>
 
-<table class="table table-bordered">
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar-holder');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
 
-  <thead>
-    <tr  class="text-center" >
-      <th scope="col">Sun</th>
-      <th scope="col">Mon</th>
-      <th scope="col">Tue</th>
-      <th scope="col">Wed</th>
-      <th scope="col">Thu</th>
-      <th scope="col">Fri</th>
-      <th scope="col">Sat</th>
-    </tr>
-  </thead>
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          },
+          initialView: 'dayGridMonth',
+          themeSystem: 'bootstrap5',
+          editable: true,
+          eventSources: [
+                    {
+                        url: "{{ path('fc_load_events') }}",
+                        method: "POST",
+                        extraParams: {
+                            filters: JSON.stringify({})
+                        },
+                        failure: () => {
+                             alert("There was an error while fetching FullCalendar!");
+                        },
+                    },
+                ],
+                timeZone: 'UTC',
+        });
+        calendar.render();
+      });
 
-  <tbody>
-    <tr  style="height:120px;">
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        <div class="text-center bg-primary text-light rounded m-0"> PC02 Ilias</div>
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-    </tr>
-    <tr  style="height:120px;">
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        <div class="text-center bg-primary text-light rounded m-0"> PC02 Ilias</div>
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-    </tr>
-    <tr  style="height:120px;">
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        <div class="text-center bg-primary text-light rounded m-0"> PC02 Ilias</div>
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-    </tr>
-    <tr  style="height:120px;">
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        <div class="text-center bg-primary text-light rounded m-0"> PC02 Ilias</div>
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-      <td class="m-0 p-0">
-        <div class="text-right p-2">1</div>
-        
-      </td>
-    </tr>
-
- 
-   
-
-
-
-  </tbody>
-</table>
+    </script>
 
 
 
@@ -211,79 +45,55 @@
 
 
 
-
-
-
-
-                </div>
-                <div class="card-footer text-muted">
-                    2 days ago
-                </div>
-            </div>
-
-        </div>
-        <!-- end col -->
-    </div>
-    <!-- end row-->
-    <div style="clear:both">
-    </div>
-    <!-- Add New Event MODAL -->
-    <div class="modal fade" id="event-modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header py-3 px-4">
-                    <h5 class="modal-title" id="modal-title">Event</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <form class="needs-validation" name="event-form" id="form-event" novalidate="">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Event Name</label>
-                                    <input class="form-control" placeholder="Insert Event Name" type="text" name="title" id="event-title" required="" value="">
-                                    <div class="invalid-feedback">Please provide a valid event name</div>
-                                </div>
-                            </div>
-                            <!-- end col-->
-                            <div class="col-12">
-                                <div class="mb-3">
-                                    <label class="form-label">Category</label>
-                                    <select class="form-select" name="category" id="event-category">
-                                      <option selected="">--Select--</option>
-                                      <option value="bg-danger">Danger</option>
-                                      <option value="bg-success">Success</option>
-                                      <option value="bg-primary">Primary</option>
-                                      <option value="bg-info">Info</option>
-                                      <option value="bg-dark">Dark</option>
-                                      <option value="bg-warning">Warning</option>
-                                    </select>
-                                    <div class="invalid-feedback">Please select a valid event category</div>
-                                </div>
-                            </div>
-                            <!-- end col-->
-                        </div>
-                        <!-- end row-->
-                        <div class="row mt-2">
-                            <div class="col-6">
-                                <button type="button" class="btn btn-danger" id="btn-delete-event">Delete</button>
-                            </div>
-                            <!-- end col-->
-                            <div class="col-6 text-end">
-                                <button type="button" class="btn btn-light me-1" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-success" id="btn-save-event">Save</button>
-                            </div>
-                            <!-- end col-->
-                        </div>
-                        <!-- end row-->
-                    </form>
-                </div>
-            </div>
-            <!-- end modal-content-->
-        </div>
-        <!-- end modal dialog-->
-    </div>
-    <!-- end modal-->
-</div>
 
 {% endblock %}
+
+{% block content_title %}
+<h1 class="title">Calendar</h1>
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid">
+  <div class="row mb-4">
+    <div class="col-xl-3">
+      <div class="card h-100">
+        <div class="card-body">
+          <a href="" type="button" class="btn btn-primary w-100">
+            <span class="fa fa-calendar-plus-o">
+            </span> Create new reservation</a>
+          <div id="external-events">
+            <br>
+            <p class="text-muted">Drag and drop your event or click in the calendar</p>
+            <div class="external-event fc-event rounded-2 border border-primary mb-2" data-class="bg-success">
+              <i class="fa fa-circle me-2 p-2"></i>New Event Planning</div>
+            <div class="external-event fc-event rounded-2 border border-secondary mb-2" data-class="bg-success">
+              <i class="fa fa-circle me-2 p-2"></i>New Event Planning</div>
+            <div class="external-event fc-event rounded-2 border border-success mb-2" data-class="bg-success">
+              <i class="fa fa-circle me-2 p-2"></i>New Event Planning</div>
+            <div class="external-event fc-event rounded-2 border border-danger mb-2" data-class="bg-success">
+              <i class="fa fa-circle me-2 p-2"></i>New Event Planning</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end col-->
+    <div class="col-xl-9">
+      <div class="card h-100">
+
+        <div class="card-body p-3">
+          <div id="calendar-holder"></div>
+        </div>
+      </div>
+    </div>
+    <!-- end col -->
+  </div>
+  <!-- end row-->
+
+
+
+
+
+
+</div>
+{% endblock %}
+

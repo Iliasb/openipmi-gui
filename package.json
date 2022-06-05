@@ -16,6 +16,8 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@fullcalendar/bootstrap5": "^5.11.0",
+        "@fullcalendar/core": "^5.11.0",
         "jquery": "^3.6.0"
     }
 }

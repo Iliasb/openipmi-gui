@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Asset;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,20 +29,31 @@ use App\Entity\Address;
 use App\Entity\Network;
 
 use App\Repository\LocationRepository;
+use App\Repository\ReservationRepository;
+use App\Repository\DeviceRepository;
 
 class DashboardController extends AbstractDashboardController
 {
 
 
-    public function __construct(LocationRepository $locationRepository)
+    public function __construct(LocationRepository $locationRepository, ReservationRepository $reservationRepository,DeviceRepository $deviceRepository)
     {
         $this->locationRepository = $locationRepository;
+        $this->reservationRepository = $reservationRepository;
+        $this->deviceRepository = $deviceRepository;
     }
 
 
     public function configureAssets(): Assets
     {
-        return Assets::new()->addJsFile('https://code.jquery.com/jquery-3.6.0.min.js');
+        return Assets::new()->addJsFile('https://code.jquery.com/jquery-3.6.0.min.js')
+        ->addJsFile('https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.js')
+        ->addCssFile('https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.css')
+        ->addCssFile('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.3/font/bootstrap-icons.min.css');
+
+
+        
+
     }
 
 
@@ -79,12 +91,15 @@ class DashboardController extends AbstractDashboardController
     #[Route('/calendar', name: 'calendar')]
     public function calendar(): Response
     {
-    
-        //$reservations = $this->reservationRepository
-        //    ->findAll();
+        $reservations = $this->reservationRepository
+            ->findAll();
+
+        $devices = $this->deviceRepository
+            ->findAll();
 
         return $this->render('calendar.html.twig', [
-           // 'reservations' => $reservations,
+            'reservations' => $reservations,
+            'devices' => $devices,
         ]);
     }
 
